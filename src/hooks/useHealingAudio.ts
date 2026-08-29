@@ -10,7 +10,7 @@ export function useHealingAudio() {
   const [isMuted, setIsMuted] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isShuffle, setIsShuffle] = useState<boolean>(false);
-  const [autoAdvance, setAutoAdvance] = useState<boolean>(true); // Continuous play to next songs
+  const [autoAdvance, setAutoAdvance] = useState<boolean>(false); // Manual play/pause control by default
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const currentTrackRef = useRef<AudioTrack>(currentTrack);
@@ -46,7 +46,7 @@ export function useHealingAudio() {
         setIsLoading(false);
       })
       .catch((err) => {
-        console.warn("Audio auto-play policy or network issue:", err);
+        console.warn("Audio playback notice:", err);
         setIsLoading(false);
         setIsPlaying(false);
       });
@@ -75,7 +75,8 @@ export function useHealingAudio() {
       setVolumeState(savedVol);
 
       const audio = new Audio();
-      audio.loop = false; // Disable single song loop so it auto-advances to next song
+      audio.loop = false;
+      audio.autoplay = false;
       audio.volume = savedVol;
       audioRef.current = audio;
 
@@ -85,21 +86,16 @@ export function useHealingAudio() {
         setIsPlaying(true);
       };
       audio.onpause = () => setIsPlaying(false);
-      audio.onerror = (e) => {
-        console.warn("Audio playback error, auto-advancing to next track:", e);
+      audio.onerror = () => {
         setIsLoading(false);
-        // If track fails or network drops, auto skip to next available track
-        if (autoAdvanceRef.current) {
-          setTimeout(() => {
-            selectNextTrack();
-          }, 1500);
-        }
+        setIsPlaying(false);
       };
 
-      // Seamless auto-transition to next track when current song finishes
       audio.onended = () => {
         if (autoAdvanceRef.current) {
           selectNextTrack();
+        } else {
+          setIsPlaying(false);
         }
       };
 
