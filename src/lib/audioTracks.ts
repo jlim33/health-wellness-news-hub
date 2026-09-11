@@ -1,35 +1,55 @@
 import { AudioTrack } from "./types";
 
 export const RELAXING_AUDIO_TRACKS: AudioTrack[] = [
-  // 1. Classical Masterpieces (Royalty-free ambient arrangements)
+  // 1. Classical Masterpieces (Classic Best Curated 5 Tracks)
   {
-    id: "classical-chopin-nocturne",
-    title: "Chopin - Nocturne in E-flat major, Op. 9 No. 2",
-    artist: "Frederic Chopin (Classical Piano Lounge)",
+    id: "classic-canon",
+    title: "Pachelbel - Canon in D major (파헬벨 캐논 변주곡)",
+    artist: "Classic Best Masterpiece",
+    category: "classical",
+    categoryLabel: "클래식 명작 🎻",
+    src: "/audio/classic-best/01-pachelbel-canon.mp3",
+    duration: "6:23",
+    icon: "Music"
+  },
+  {
+    id: "classic-fur-elise",
+    title: "Beethoven - Für Elise (베토벤 엘리제를 위하여)",
+    artist: "Classic Best Masterpiece",
     category: "classical",
     categoryLabel: "클래식 피아노 🎹",
-    src: "https://cdn.pixabay.com/download/audio/2022/05/16/audio_db6591201e.mp3?filename=chopin-nocturne-op-9-no-2-110829.mp3",
-    duration: "4:32",
+    src: "/audio/classic-best/02-beethoven-fur-elise.mp3",
+    duration: "3:49",
     icon: "Music"
   },
   {
-    id: "classical-bach-air",
-    title: "Bach - Air on the G String",
-    artist: "J.S. Bach (Peaceful Chamber Strings)",
+    id: "classic-winter",
+    title: "Vivaldi - Four Seasons 'Winter' 1st Mvt (비발디 사계 '겨울' 1악장)",
+    artist: "Classic Best Masterpiece",
     category: "classical",
     categoryLabel: "클래식 현악 🎻",
-    src: "https://cdn.pixabay.com/download/audio/2022/03/24/audio_341bbec7bb.mp3?filename=bach-air-on-the-g-string-orchestral-suite-no-3-in-d-major-bwv-1068-105151.mp3",
-    duration: "4:15",
+    src: "/audio/classic-best/03-vivaldi-winter-1st.mp3",
+    duration: "3:44",
     icon: "Music"
   },
   {
-    id: "classical-satie-gymnopedie",
-    title: "Erik Satie - Gymnopédie No. 1",
-    artist: "Erik Satie (Calm Ambient Piano)",
+    id: "classic-liebesfreud",
+    title: "Kreisler - Liebesfreud (크라이슬러 사랑의 기쁨)",
+    artist: "Classic Best Masterpiece",
     category: "classical",
-    categoryLabel: "미니멀 클래식 🎹",
-    src: "https://cdn.pixabay.com/download/audio/2022/01/18/audio_d0a13f69d2.mp3?filename=gymnopedie-no-1-10557.mp3",
-    duration: "3:40",
+    categoryLabel: "클래식 바이올린 🎻",
+    src: "/audio/classic-best/04-kreisler-liebesfreud.mp3",
+    duration: "3:32",
+    icon: "Music"
+  },
+  {
+    id: "classic-thais",
+    title: "Massenet - Méditation from Thaïs (마스네 타이스의 명상곡)",
+    artist: "Classic Best Masterpiece",
+    category: "classical",
+    categoryLabel: "클래식 명상 🎻",
+    src: "/audio/classic-best/05-massenet-meditation-thais.mp3",
+    duration: "5:01",
     icon: "Music"
   },
 
