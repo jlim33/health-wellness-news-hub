@@ -68,10 +68,45 @@ export default function KoreanHealthHomePage() {
       params.append("sortBy", sortBy);
       params.append("lang", "ko");
 
-      const res = await fetch(`/api/news?${params.toString()}`);
-      if (res.ok) {
-        const data = await res.json();
-        setArticles(data.articles || []);
+      let data: any = null;
+      try {
+        const res = await fetch(`/api/news?${params.toString()}`);
+        if (res.ok) {
+          data = await res.json();
+        }
+      } catch (e) {
+        // Fallback for static hosting
+      }
+
+      if (!data || !data.articles || data.articles.length === 0) {
+        const basePath = typeof window !== "undefined" && window.location.pathname.startsWith("/health-wellness-news-hub") ? "/health-wellness-news-hub" : "";
+        const fallbackRes = await fetch(`${basePath}/data/news.json`).catch(() => null);
+        if (fallbackRes && fallbackRes.ok) {
+          const fallbackData = await fallbackRes.json();
+          let filtered = fallbackData.articles || [];
+          if (selectedCategory !== "전체 건강 & 웰빙") {
+            filtered = filtered.filter((a: any) => a.category === selectedCategory);
+          }
+          if (searchQuery.trim()) {
+            const q = searchQuery.trim().toLowerCase();
+            filtered = filtered.filter((a: any) =>
+              a.title?.toLowerCase().includes(q) ||
+              a.snippet?.toLowerCase().includes(q)
+            );
+          }
+          if (sortBy === "popular") {
+            filtered = [...filtered].sort((a: any, b: any) => (b.likes || 0) - (a.likes || 0));
+          } else if (sortBy === "readTime") {
+            filtered = [...filtered].sort((a: any, b: any) => (a.readTime || 1) - (b.readTime || 1));
+          } else {
+            filtered = [...filtered].sort((a: any, b: any) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
+          }
+          data = { articles: filtered };
+        }
+      }
+
+      if (data && data.articles) {
+        setArticles(data.articles);
       }
     } catch (err) {
       console.error("Fetch health articles error:", err);
